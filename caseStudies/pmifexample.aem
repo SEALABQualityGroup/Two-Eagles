@@ -1,0 +1,139 @@
+ARCHI_TYPE Open_Network(void)
+	ARCHI_ELEM_TYPES
+		ELEM_TYPE Cliente(void)
+			BEHAVIOR
+			UnboundedPopArrProc(void;void) =
+				<genera, exp(1)>.UnboundedPopArrProc2();
+			UnboundedPopArrProc2(void;void) =
+				<deliver1, inf>.UnboundedPopArrProc()
+		INPUT_INTERACTIONS void
+		OUTPUT_INTERACTIONS
+			UNI deliver1
+		ELEM_TYPE Buffer(void)
+			BEHAVIOR
+			UnboundedBuffer(integer h1 := 0, integer h2 := 0;
+				void) =
+			choice
+				{
+				<get1, _>.UnboundedBuffer(h1 + 1,h2),
+				<get2, _>.UnboundedBuffer(h1,h2 + 1),
+				cond(h1 > 0)-><put1,_>.UnboundedBuffer(h1 - 1,h2),
+				cond(h2 > 0)-><put2,_>.UnboundedBuffer(h1,h2 - 1)
+				}
+		INPUT_INTERACTIONS
+			OR get1; get2
+		OUTPUT_INTERACTIONS
+			UNI put1; put2
+		ELEM_TYPE CPU(void)
+			BEHAVIOR
+			ServProcWithBuffer(void;void) =
+				choice
+					{
+					<select1,inf(1,0.5)>.ServProcWithBufferServ1(),
+					<select2,inf(1,0.5)>.ServProcWithBufferServ2()
+					};
+			ServProcWithBufferServ1(void;void) =
+				<serve1,exp(2)>.ServProcWithBufferRout1();
+			ServProcWithBufferServ2(void;void) =
+				<serve2,exp(4)>.ServProcWithBufferRout2();
+			ServProcWithBufferRout1(void;void) =
+				choice
+					{
+					<choose1,inf(1,0.55)>.<leave11, inf>.ServProcWithBuffer(),
+					<choose2,inf(1,0.4)>.<leave12, inf>.ServProcWithBuffer(),
+					<choose3,inf(1,0.05)>.ServProcWithBuffer()
+					};
+			ServProcWithBufferRout2(void;void) =
+				choice
+					{
+					<choose1,inf(1,0.6)>.<leave21, inf>.ServProcWithBuffer(),
+					<choose2,inf(1,0.3)>.<leave22, inf>.ServProcWithBuffer(),
+					<choose3,inf(1,0.1)>.ServProcWithBuffer()
+					}
+		INPUT_INTERACTIONS
+			UNI select1; select2
+		OUTPUT_INTERACTIONS
+			UNI leave11; leave12;
+			leave21; leave22
+		ELEM_TYPE ATM(void)
+			BEHAVIOR
+			ServProcWithBuffer(void;void) =
+				choice
+					{
+					<select1,inf(1,0.5)>.ServProcWithBufferServ1(),
+					<select2,inf(1,0.5)>.ServProcWithBufferServ2()
+					};
+			ServProcWithBufferServ1(void;void) =
+				<serve1,exp(1)>.ServProcWithBufferRout1();
+			ServProcWithBufferServ2(void;void) =
+				<serve2,exp(1)>.ServProcWithBufferRout2();
+			ServProcWithBufferRout1(void;void) =
+				<leave11, inf>.ServProcWithBuffer();
+			ServProcWithBufferRout2(void;void) =
+				<leave21, inf>.ServProcWithBuffer()
+		INPUT_INTERACTIONS
+			UNI select1; select2
+		OUTPUT_INTERACTIONS
+			UNI leave11; leave21
+		ELEM_TYPE DISKS(void)
+			BEHAVIOR
+			ServProcWithBuffer(void;void) =
+				choice
+					{
+					<select1,inf(1,0.5)>.ServProcWithBufferServ1(),
+					<select2,inf(1,0.5)>.ServProcWithBufferServ2()
+					};
+			ServProcWithBufferServ1(void;void) =
+				<serve1,exp(2)>.ServProcWithBufferRout1();
+			ServProcWithBufferServ2(void;void) =
+				<serve2,exp(2)>.ServProcWithBufferRout2();
+			ServProcWithBufferRout1(void;void) =
+				<leave11, inf>.ServProcWithBuffer();
+			ServProcWithBufferRout2(void;void) =
+				<leave21, inf>.ServProcWithBuffer()
+		INPUT_INTERACTIONS
+			UNI select1; select2
+		OUTPUT_INTERACTIONS
+			UNI leave11; leave21
+		ARCHI_TOPOLOGY
+			ARCHI_ELEM_INSTANCES
+				Withdrawal : Cliente();
+				Get_balance : Cliente();
+				CPUBuffer : Buffer();
+				ATMBuffer : Buffer();
+				DISKSBuffer : Buffer();
+				CPUServer : CPU();
+				ATMServer : ATM();
+				DISKSServer : DISKS()
+		ARCHI_INTERACTIONS
+  			void
+		ARCHI_ATTACHMENTS
+		% definiamo dapprima i collegamenti tra buffers e servers
+		% CPU
+		FROM CPUBuffer.put1 TO CPUServer.select1;
+		FROM CPUBuffer.put2 TO CPUServer.select2;
+		% ATM
+		FROM ATMBuffer.put1 TO ATMServer.select1;
+		FROM ATMBuffer.put2 TO ATMServer.select2;
+		% DISKS
+		FROM DISKSBuffer.put1 TO DISKSServer.select1;
+		FROM DISKSBuffer.put2 TO DISKSServer.select2;
+		% definiamo i collegamenti tra il source di Withdrawal e CPU
+		FROM Withdrawal.deliver1 TO CPUBuffer.get1;
+		% definiamo i collegamenti tra il source di Get_balance e CPU
+		FROM Get_balance.deliver1 TO CPUBuffer.get2;
+		% definiamo i collegamenti tra CPU e gli altri server per la classe Withdrawal
+		FROM CPUServer.leave11 TO ATMBuffer.get1;
+		FROM CPUServer.leave12 TO DISKSBuffer.get1;
+		% definiamo i collegamenti tra CPU e gli altri server per la classe Get_balance
+		FROM CPUServer.leave21 TO ATMBuffer.get2;
+		FROM CPUServer.leave22 TO DISKSBuffer.get2;
+		% definiamo i collegamenti tra ATM e CPU per la classe Withdrawal
+		FROM ATMServer.leave11 TO CPUBuffer.get1;
+		% definiamo i collegamenti tra ATM e CPU per la classe Get_balance
+		FROM ATMServer.leave21 TO CPUBuffer.get2;
+		% definiamo i collegamenti tra DISKS e CPU per la classe Withdrawal
+		FROM DISKSServer.leave11 TO CPUBuffer.get1;
+		% definiamo i collegamenti tra DISKS e CPU per la classe Get_balance
+		FROM DISKSServer.leave21 TO CPUBuffer.get2
+END

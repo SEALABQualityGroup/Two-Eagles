@@ -1,0 +1,71 @@
+ARCHI_TYPE SeqCompSys(
+const rate tassoArrivi1 := 1, 
+const rate tassoArrivi2 := 2, 
+const rate tassoLexer := 3, 
+const rate tassoParser := 4, 
+const rate tassoCheck := 5, 
+const rate tassoOptimizer := 6, 
+const rate tassoGenerate := 7)
+% la seguente rete di code corrisponde al compilatore sequenziale utilizzato
+% nell'articolo
+ARCHI_ELEM_TYPES
+ELEM_TYPE
+ProgGenT(const rate lambda)
+BEHAVIOR
+ProgGen(void;void) =
+<generate_prog,exp(lambda)>.ProgGenRouting();
+ProgGenRouting(void;void) =
+<deliver_prog,inf>.ProgGen()
+INPUT_INTERACTIONS
+void
+OUTPUT_INTERACTIONS
+UNI deliver_prog
+ELEM_TYPE
+ProgBufferT(const integer cap1, const integer cap2)
+BEHAVIOR
+ProgBuffer(integer h1 := cap1, integer h2 := cap2; void) =
+choice
+{
+<get_prog1,_>.ProgBuffer(h1+1,h2),
+<get_prog2,_>.ProgBuffer(h1,h2+1),
+cond(h1 > 0) -> <put_prog1,_>.ProgBuffer(h1 - 1, h2),
+cond(h2 > 0) -> <put_prog2,_>.ProgBuffer(h1, h2 - 1)
+}
+INPUT_INTERACTIONS 
+UNI get_prog1; get_prog2
+OUTPUT_INTERACTIONS
+UNI put_prog1; put_prog2
+ELEM_TYPE
+SeqCompT(const rate tassoLexer, const rate tassoParser, const rate tassoCheck, const rate tassoOptimizer, 
+const rate tassoGenerate)
+BEHAVIOR
+SeqComp(void;void) =
+choice
+{
+<select_prog1,inf>.SeqCompServ1(),
+<select_prog2,inf>.SeqCompServ2()
+};
+SeqCompServ1(void;void) =
+<recognize_tokens,exp(tassoLexer)>.<parse_phrases,exp(tassoParser)>.<check_phrases,exp(tassoCheck)>.
+<optimize_code,exp(tassoOptimizer)>.<generate_code,exp(tassoGenerate)>.SeqComp();
+SeqCompServ2(void;void) =
+<recognize_tokens,exp(tassoLexer)>.<parse_phrases,exp(tassoParser)>.<check_phrases,exp(tassoCheck)>.
+<generate_code,exp(tassoGenerate)>.SeqComp()
+INPUT_INTERACTIONS
+UNI select_prog1; select_prog2
+OUTPUT_INTERACTIONS
+void
+ARCHI_TOPOLOGY
+ARCHI_ELEM_INSTANCES
+PG1 : ProgGenT(tassoArrivi1);
+PG2 : ProgGenT(tassoArrivi2);
+PB : ProgBufferT(0,0);
+SC : SeqCompT(tassoLexer,tassoParser,tassoCheck,tassoOptimizer,tassoGenerate)
+ARCHI_INTERACTIONS
+void
+ARCHI_ATTACHMENTS
+FROM PG1.deliver_prog TO PB.get_prog1;
+FROM PG2.deliver_prog TO PB.get_prog2;
+FROM PB.put_prog1 TO SC.select_prog1;
+FROM PB.put_prog2 TO SC.select_prog2
+END

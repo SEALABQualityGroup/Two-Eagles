@@ -1,0 +1,96 @@
+ARCHI_TYPE Closed_Network(void)
+% la seguente rete di code corrisponde ad una rete di code chiusa con 4 jobs,
+% un centro di delay e un centro di servizio multiserver (3 servers). Ha un unico
+% carico di lavoro.
+	ARCHI_ELEM_TYPES
+		ELEM_TYPE Cliente(void)
+			BEHAVIOR
+			SingleCustArrProc(void;void) =
+				<genera, exp(5)>.SingleCustArrProc2();
+			SingleCustArrProc2(void;void) =
+					<deliver1, inf>.SingleCustArrProc3();
+			SingleCustArrProc3(void;void) =
+				choice
+					{
+					<return1, _>.SingleCustArrProc(),
+					<return2, _>.SingleCustArrProc(),
+					<return3, _>.SingleCustArrProc()
+					}
+		INPUT_INTERACTIONS
+			UNI return1; return2; return3
+		OUTPUT_INTERACTIONS
+			UNI deliver1
+		ELEM_TYPE Servizio(void)
+			BEHAVIOR
+			ServProcWithBuffer(void;void) =
+				<arrive1,inf>.ServProcWithBufferServ1();
+			ServProcWithBufferServ1(void;void) =
+				<serve1,exp(0.1)>.ServProcWithBufferRout1();
+			ServProcWithBufferRout1(void;void) =
+				<leave11, inf>.ServProcWithBuffer()
+		INPUT_INTERACTIONS
+			UNI arrive1
+		OUTPUT_INTERACTIONS
+			OR leave11
+		ELEM_TYPE Buffer(void)
+			BEHAVIOR
+				UnboundedBuffer(integer h1 := 0;void) =
+					choice
+						{
+						<get1, _>.UnboundedBuffer(h1+1),
+						cond(h1 > 0)-><put1,_>.UnboundedBuffer(h1 - 1)
+						}
+		INPUT_INTERACTIONS
+			OR get1
+		OUTPUT_INTERACTIONS
+			OR put1			
+		ARCHI_TOPOLOGY
+			ARCHI_ELEM_INSTANCES
+				PROVAClienti : Cliente();
+				PROVAClienti2 : Cliente();
+				PROVAClienti3 : Cliente();
+				PROVAClienti4 : Cliente();
+				PROVAServizioWithBuffer : Servizio();
+				PROVAServizioWithBuffer2 : Servizio();
+				PROVAServizioWithBuffer3 : Servizio();
+				PROVABuffer : Buffer()
+			ARCHI_INTERACTIONS
+  				void
+			ARCHI_ATTACHMENTS
+				% interazioni di output per il primo cliente
+				FROM PROVAClienti.deliver1 TO PROVABuffer.get1;
+				
+				% interazioni di output per il secondo cliente
+				FROM PROVAClienti2.deliver1 TO PROVABuffer.get1;
+				
+				% interazioni di output per il terzo cliente
+				FROM PROVAClienti3.deliver1 TO PROVABuffer.get1;
+				
+				% interazioni di output per il quarto cliente
+				FROM PROVAClienti4.deliver1 TO PROVABuffer.get1;
+				
+				% interazioni di input per il primo cliente
+				FROM PROVAServizioWithBuffer.leave11 TO PROVAClienti.return1;
+				FROM PROVAServizioWithBuffer2.leave11 TO PROVAClienti.return2;
+				FROM PROVAServizioWithBuffer3.leave11 TO PROVAClienti.return3;
+				
+				% interazioni di output per il secondo cliente
+				FROM PROVAServizioWithBuffer.leave11 TO PROVAClienti2.return1;
+				FROM PROVAServizioWithBuffer2.leave11 TO PROVAClienti2.return2;
+				FROM PROVAServizioWithBuffer3.leave11 TO PROVAClienti2.return3;
+
+				% interazioni di output per il terzo cliente				
+				FROM PROVAServizioWithBuffer.leave11 TO PROVAClienti3.return1;
+				FROM PROVAServizioWithBuffer2.leave11 TO PROVAClienti3.return2;
+				FROM PROVAServizioWithBuffer3.leave11 TO PROVAClienti3.return3;
+				
+				% interazioni di output per il terzo cliente				
+				FROM PROVAServizioWithBuffer.leave11 TO PROVAClienti4.return1;
+				FROM PROVAServizioWithBuffer2.leave11 TO PROVAClienti4.return2;
+				FROM PROVAServizioWithBuffer3.leave11 TO PROVAClienti4.return3;
+				
+				% interazioni di input del buffer
+				FROM PROVABuffer.put1 TO PROVAServizioWithBuffer.arrive1;
+				FROM PROVABuffer.put1 TO PROVAServizioWithBuffer2.arrive1;
+				FROM PROVABuffer.put1 TO PROVAServizioWithBuffer3.arrive1
+END

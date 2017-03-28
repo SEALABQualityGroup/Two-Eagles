@@ -1,0 +1,91 @@
+ARCHI_TYPE Closed_Network(void)
+	ARCHI_ELEM_TYPES
+		ELEM_TYPE Cliente(void)
+			BEHAVIOR
+			SingleCustArrProc(void;void) =
+				<genera, exp(1)>.SingleCustArrProc2();
+			SingleCustArrProc2(void;void) =
+				<deliver1, inf>.SingleCustArrProc3();
+			SingleCustArrProc3(void;void) =
+				<return1, _>.SingleCustArrProc()
+		INPUT_INTERACTIONS
+			UNI return1
+		OUTPUT_INTERACTIONS
+			UNI deliver1
+		ELEM_TYPE Buffer(void)
+			BEHAVIOR
+			UnboundedBuffer(integer h1 := 0;
+				void) =
+			choice
+				{
+				<get1, _>.UnboundedBuffer(h1 + 1),
+				cond(h1 > 0)-><put1,_>.UnboundedBuffer(h1 - 1)
+				}
+		INPUT_INTERACTIONS
+			OR get1
+		OUTPUT_INTERACTIONS
+			UNI put1
+		ELEM_TYPE CPU(void)
+			BEHAVIOR
+			ServProcWithBuffer(void;void) =
+				<select1,inf(1,0.5)>.ServProcWithBufferServ1();
+			ServProcWithBufferServ1(void;void) =
+				<serve1,exp(2)>.ServProcWithBufferRout1();
+			ServProcWithBufferRout1(void;void) =
+				choice
+					{
+					<choose1,inf(1,0.55)>.<leave11, inf>.ServProcWithBuffer(),
+					<choose2,inf(1,0.4)>.<leave12, inf>.ServProcWithBuffer(),
+					<choose3,inf(1,0.05)>.<leave13, inf>.ServProcWithBuffer()
+					}
+		INPUT_INTERACTIONS
+			UNI select1
+		OUTPUT_INTERACTIONS
+			UNI leave11; leave12
+			OR leave13
+		ELEM_TYPE VIDEO(void)
+			BEHAVIOR
+			ServProcWithBuffer(void;void) =
+				<select1,inf(1,0.5)>.ServProcWithBufferServ1();
+			ServProcWithBufferServ1(void;void) =
+				<serve1,exp(1)>.ServProcWithBufferRout1();
+			ServProcWithBufferRout1(void;void) =
+				<leave11, inf>.ServProcWithBuffer()
+		INPUT_INTERACTIONS
+			UNI select1
+		OUTPUT_INTERACTIONS
+			UNI leave11
+		ELEM_TYPE DISKS(void)
+			BEHAVIOR
+			ServProcWithBuffer(void;void) =
+				<select1,inf(1,0.5)>.ServProcWithBufferServ1();
+			ServProcWithBufferServ1(void;void) =
+				<serve1,exp(2)>.ServProcWithBufferRout1();
+			ServProcWithBufferRout1(void;void) =
+				<leave11, inf>.ServProcWithBuffer()
+		INPUT_INTERACTIONS
+			UNI select1
+		OUTPUT_INTERACTIONS
+			UNI leave11
+		ARCHI_TOPOLOGY
+			ARCHI_ELEM_INSTANCES
+				Withdrawal1 : Cliente();
+				CPUBuffer : Buffer();
+				VIDEOBuffer : Buffer();
+				DISKSBuffer : Buffer();
+				CPUServer : CPU();
+				VIDEOServer : VIDEO();
+				DISKSServer : DISKS()
+		ARCHI_INTERACTIONS
+  			void
+		ARCHI_ATTACHMENTS
+		FROM CPUBuffer.put1 TO CPUServer.select1;
+		FROM VIDEOBuffer.put1 TO VIDEOServer.select1;
+		FROM DISKSBuffer.put1 TO DISKSServer.select1;
+		FROM Withdrawal1.deliver1 TO CPUBuffer.get1;
+		FROM CPUServer.leave11 TO VIDEOBuffer.get1;
+		FROM CPUServer.leave12 TO DISKSBuffer.get1;
+		FROM VIDEOServer.leave11 TO CPUBuffer.get1;
+		FROM DISKSServer.leave11 TO CPUBuffer.get1;
+		FROM CPUServer.leave13 TO Withdrawal1.return1
+END
