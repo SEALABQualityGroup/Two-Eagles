@@ -1,0 +1,145 @@
+%%This is a very basic article template.
+%%There is just one section and two subsections.
+\documentclass[12pt]{article}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage[italian]{babel}
+\usepackage[pointlessenum]{paralist}
+\usepackage{color}
+\usepackage{amssymb}
+
+\definecolor{orange}{rgb}{1,0.5,0}
+
+\title{\textbf{Requisiti soddisfatti}}
+\date{}
+\author{}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduzione}
+In questo documento si riportano le funzionalità che sono state implementate, con eventuali considerazioni, in stretta relazione con il documento dei requisiti. Si è scelto di usare i colori per rendere più evidente i risultati raggiunti punto per punto:
+\begin{itemize}
+ \item \textcolor{green}{\checkmark} \textcolor{green}{Il verde indica un obiettivo pienamente raggiunto, che non ha presentato problemi in fase di test.}
+ \item \textcolor{orange}{!} \textcolor{orange}{L'arancione indica un obiettivo in gran parte raggiunto, ma con qualche riserva dettagliata puntualmente}
+ \item \textcolor{red}{X} \textcolor{red}{Il rosso indica un obiettivo raggiunto solo parzialmente.}
+\end{itemize}
+
+
+
+\section{Requisiti}
+
+\subsection{Requisiti funzionali}
+\subsubsection{Obiettivi primari}
+
+\begin{enumerate}
+  
+  \item L'interfaccia grafica del plugin deve permettere l'accesso a tutte le
+  funzionalità del tool TwoTowers versione 5.1 già presente elencate di seguito:
+  \begin{enumerate}
+    \item Operazioni standard su file che elabora il programma, quali: \textcolor{green}{\checkmark}
+    \begin{enumerate}
+      \item visualizzazione e modifica; \textcolor{green}{\checkmark}
+      \item creazione; \textcolor{green}{\checkmark}
+      \item caricamento; \textcolor{green}{\checkmark}
+      \item salvataggio con nome; \textcolor{green}{\checkmark}
+      \item salvataggio (senza un nome nuovo); \textcolor{green}{\checkmark}
+    \end{enumerate}
+    \textcolor{green}{Tutte funzionalità già presenti in Eclipse. Anche gli editor personalizzati (per ciascun tipo di file) necessari per la visualizzazione e modifica dei file usano le funzionalità di base messe a disposizione dal framework di Eclipse. Per questo sono funzionalità altamente affidabili.}
+    \item Aemilia COMPILER \textcolor{green}{\checkmark}
+    \begin{itemize}
+      \item Parser \textcolor{green}{\checkmark}
+      \item Integrated semantic model size calculator \textcolor{green}{\checkmark}
+      \item Functional semantic model size calculator \textcolor{green}{\checkmark}
+      \item Performance semantic model size calculator \textcolor{green}{\checkmark}
+      \item Integrated semantic model generator \textcolor{green}{\checkmark}
+      \item Functional semantic model generator \textcolor{green}{\checkmark}
+      \item Performance semantic model generator \textcolor{green}{\checkmark}
+    \end{itemize}
+\textcolor{green}{Tutte funzioni fedelmente riportate dal precedente tool e funzionanti. Sono accessibili sia dal menù principale, sia dalla toolbar e si attivano/compaiono solo quando è aperto con un editor un file su cui è possibile fare tali operazioni.}
+    \item EQUIVALENCE VERIFIER \textcolor{green}{\checkmark}
+    \begin{itemize}
+      \item Strong bisimulation equivalence verifier \textcolor{green}{\checkmark}
+      \item Weak  bisimulation equivalence verifier \textcolor{green}{\checkmark}
+      \item Strong Markovian bisimulation equivalence verifier \textcolor{green}{\checkmark}
+      \item Weak Markovian bisimulation equivalence verifier \textcolor{green}{\checkmark}
+    \end{itemize}
+\textcolor{green}{Tutte funzioni fedelmente riportate dal precedente tool e funzionanti. Sono accessibili sia dal menù principale, sia dalla toolbar e si attivano/compaiono solo quando è aperto con un editor un file su cui è possibile fare tali operazioni.}
+\clearpage
+
+    \item MODEL CHECKER \textcolor{orange}{!}
+    \begin{itemize}
+      \item Symbolic LTL model checker \textcolor{orange}{!}
+    \end{itemize}
+    \textcolor{orange}{Funzione fedelmente riportata dal precedente tool. E' accessibile sia dal menù principale, sia dalla toolbar e si attiva/compare solo quando è aperto con un editor un file su cui è possibile fare tale operazione. La funzionalità è stata scarsamente testata a causa di problemi con il tool NuSMV indipendenti dalla realizzazione del plugin e da Eclipse. Essendo l'implementazione del tutto analoga a quella delle altre funzionalità fin qui presentate, è ragionevole pensare che funzioni correttamente in presenza del tool NuSMV installato.}
+    \item SECURITY ANALYZER \textcolor{green}{\checkmark}
+    \begin{itemize}
+      \item Non-interference analyzer \textcolor{green}{\checkmark}
+      \item Non-deducibility on composition analyzer \textcolor{green}{\checkmark}
+    \end{itemize}
+\textcolor{green}{Tutte funzioni fedelmente riportate dal precedente tool e funzionanti. Sono accessibili sia dal menù principale, sia dalla toolbar e si attivano/compaiono solo quando è aperto con un editor un file su cui è possibile fare tali operazioni.}
+    
+    \item PERFORMANCE EVALUATOR \textcolor{green}{\checkmark}
+    \begin{itemize}
+      \item Stationary probability distribution calculator (Gaussian Elimination) \textcolor{green}{\checkmark}
+      \item Stationary probability distribution calculator (adaptive symmetric SOR) \textcolor{green}{\checkmark}
+      \item Transient probability distribution calculator (uniformization) \textcolor{green}{\checkmark}
+      \item Stationary reward-based measure calculator (Gaussian Elimination) \textcolor{green}{\checkmark}
+      \item	Stationary reward-based measure calculator (adaptive symmetric SOR) \textcolor{green}{\checkmark}
+      \item Transient reward-based measure calculator (uniformization) \textcolor{green}{\checkmark}
+      \item Simulator \textcolor{green}{\checkmark}
+    \end{itemize}
+    \textcolor{green}{Tutte funzioni fedelmente riportate dal precedente tool e funzionanti. Sono accessibili sia dal menù principale, sia dalla toolbar e si attivano/compaiono solo quando è aperto con un editor un file su cui è possibile fare tali operazioni.}
+  \end{enumerate}
+  
+  \item Inoltre devono essere aggiunti i seguenti menù e sottomenù:
+  \begin{enumerate}
+    \item Architectural Assistant: \textcolor{green}{\checkmark}
+    \begin{itemize}
+      \item Compatibility Checker \textcolor{green}{\checkmark}
+      \item Interoperability Checker \textcolor{green}{\checkmark}
+      \item Queueing Network Generator \textcolor{green}{\checkmark}
+    \end{itemize}
+\textcolor{green}{Funzionalità già presenti nel menù principale, ma non abilitate. E' già predisposta la struttura sottostante (command e handler) pronta per accogliere un'implementazione rapida e analoga a quella delle altre funzioni.}
+    \item Code Generator: \textcolor{green}{\checkmark}
+    \begin{itemize}
+      \item Program Generator \textcolor{green}{\checkmark}
+      \item Package Generator \textcolor{green}{\checkmark}
+      \item Applet Generator \textcolor{green}{\checkmark}
+    \end{itemize}
+    \textcolor{green}{Funzionalità già presenti nel menù principale, ma non abilitate. E' già predisposta la struttura sottostante (command e handler) pronta per accogliere un'implementazione rapida e analoga a quella delle altre funzioni.}
+  \end{enumerate}
+  
+  \item Integrazione dell'interfaccia realizzata con un
+  tool esistente per la trasformazione di diagrammi UML in specifiche Aemilia. \textcolor{green}{\checkmark}
+  \textcolor{green}{La funzionalità è presente sia nel menù principale che nella toolbar e consiste nell'esecuzione del programma Seal.}
+  \item Stesura di un manuale utente, ovvero di un menù Help. \textcolor{green}{\checkmark}
+  \textcolor{green}{E' stato adattato il manuale già presente nel tool TwoTowers, lasciando i contentuti inalterati, al sistema di Help presente in Eclipse.}
+  \item Codice sorgente commentato e documentato attendendosi il
+  più possibile allo stile di documentazione standard per i plugin di Eclipse. \textcolor{orange}{!}
+  \textcolor{orange}{Non è stato possibile commentare il codice totalmente. Le motivazioni sono di natura tecnica e riguardano la natura particolare di un progetto di questo tipo.}
+\end{enumerate}
+
+\subsubsection{Obiettivi secondari}
+\begin{enumerate}
+  \item Funzionalità di editing dei file avanzate per ciascun tipo di estensione
+  usato:
+  \begin{itemize}
+    \item syntax highlighting; \textcolor{red}{X}
+    \item content assist (per i file modificabili da utente). \textcolor{red}{X}
+  \end{itemize}
+\textcolor{red}{E' stato implementato il sintax highlighting per alcuni editor prendendo le parole chiave dal manuale. Il content assist invece non è attualmente presente, anche se è già predisposta la struttura delle classi. Quindi si rimanda alla documentazione ufficiale di Eclipse come punto di partenza per l'implementazione: Platform Plug-in Developer Guide > Programmer's Guide > Editors.}
+\end{enumerate}
+
+\subsection{Requisiti non funzionali}
+Interfaccia grafica:
+\begin{enumerate}
+  \item intuitiva; \textcolor{green}{\checkmark} \textcolor{green}{La gui è stata progettata sulla base di quella che usa Eclipse, tool ormai affermato e maturo. Si ritiene perciò che anche questo requisito sia pienamente raggiunto.}
+  \item di facile navigabilità; \textcolor{green}{\checkmark} \textcolor{green}{Vale lo stesso discorso del punto precedente. Si sono usati meccanismi per organizzare le varie funzionalità in maniera analoga con ciò che già mette a disposizione Eclipse.}
+  \item estendibile. \textcolor{green}{\checkmark} \textcolor{green}{Il framework di Eclipse è basato su componenti estendibili per definizione: i plugin. Risulta quindi estremamente facile estendere funzionalità ai plugin implementati, o aggiungerne di nuovi più o meno dipendenti da questi.}
+\end{enumerate}
+
+
+\end{document}

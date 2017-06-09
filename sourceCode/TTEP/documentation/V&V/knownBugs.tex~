@@ -1,0 +1,30 @@
+%%This is a very basic article template.
+%%There is just one section and two subsections.
+\documentclass[12pt]{article}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage[italian]{babel}
+\usepackage[pointlessenum]{paralist}
+
+\title{\textbf{Bug e problemi noti del plugin TTEP}}
+\date{}
+\author{}
+
+\begin{document}
+
+\maketitle
+% \section{Bug e problemi noti del plugin TTEP}
+\begin{itemize}
+ \item Solo su Windows Xp è stato riscontrato il mancato aggiornamento automatico della vista 'Navigator', gestisto direttamente da TTEP, in seguito all'esecuzione di una qualsiasi funzionalità che produce dei nuovi file in output. Il problema può comunque essere risolto abilitando l'impostazione associata al refresh automatico del workspace: Window -> Preferences -> General -> Workspace -> Refresh automatically .
+
+Il metodo che si occupa di ciò è 'refreshNavigator()', nella classe Utility del package it.univaq.ttep.utility .
+ \item Su Linux con kernel 2.6.29.4, Fluxbox 1.1.1 come windowmanger, Eclipse 3.4.2, si possono presentare crash dell'intero server grafico in seguito al lancio di alcune funzionalità (es. Transient probability distribution calculator) plugin TTEP. Non sono presenti anomalie nè nel file di log di Eclipse, nè in quello del server grafico X. Usando come desktop environment Kde 4.2.4 il problema non si verifica. Esente da problemi anche Windows Xp;
+ \item durante l'esecuzione della funzionalità 'Simulator' del menù 'Performance Evaluator' se il calcolo svolto da TTKernel non è istantaneo si ha una discrepanza tra quanto sembra indicare la finestra di dialogo che mostra l'avanzmento dell'operazione e il tempo realmente impiegato per il calcolo. Il metodo che si occupa di ciò è l''execute' chiamato da 'Simulator', nella classe Utility del package it.univaq.ttep.utility .
+\end{itemize}
+
+
+
+
+
+\end{document}

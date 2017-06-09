@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+     <extension point="org.eclipse.ui.editors">
+      <editor name="PMIF Graphical Editor"
+              extensions="pmif, xml"
+              icon="icons/sample.gif"
+              default="true"
+              class="pack.editors.PMIFGraphicalEditor"
+              contributorClass="pack.contributors.PMIFEditorActionBarContributor"
+              id="it.univaq.PMIFGraphicalEditor">
+      </editor>
+   </extension>
+   <extension point="org.eclipse.ui.newWizards">
+      <wizard name="PMIF Diagram"
+              icon="icons/sample.gif"
+              class="pack.wizards.PMIFCreationWizard"
+              id="it.univaq.PMIFCreationWizard">
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+</plugin>

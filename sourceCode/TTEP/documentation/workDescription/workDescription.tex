@@ -1,0 +1,89 @@
+%%This is a very basic article template.
+%%There is just one section and two subsections.
+\documentclass[12pt]{article}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage[italian]{babel}
+\usepackage[pointlessenum]{paralist}
+
+\title{\textbf{Descrizione dello sviluppo del plugin}}
+\date{}
+\author{}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduzione}
+Questo documento non è necessario per utilizzare il plugin TTEP e relativo help, nè è parte integrante della documentazione di sviluppo. Invece ha come obiettivo la descrizione delle fasi principali dello sviluppo dei plugin, i tool utilizzati e l'ambiente di lavoro in maniera sintetica e informale.
+
+\section{Hardware/software}
+Plugin realizzato su:
+\begin{itemize}
+ \item pc con 768 MB di ram, CPU centrino 1,5 Ghz
+ \item Linux (con test di compatibilità anche su Windows Xp)
+\end{itemize}
+
+Sistema di versionamento del progetto:
+\begin{itemize}
+ \item automatico
+ \item utilizzando svn con repository remoto fornito da Assembla.com, indirizzo del progetto \\ http://www.assembla.com/wiki/show/b5O0SY0smr3BFzab7jnrAJ , indirizzo del repository svn \\ http://subversion.assembla.com/svn/ttep (è quindi possibile vedere come si è evouto lo sviluppo del codice essendo conservate tutte le versioni)
+ \item il progetto è diventato pubblico in corso d'opera per cambiamento delle politiche di fornitura del servizio del sito
+\item nel progetto pubblico NON è (e non è mai stato) compreso codice di TwoTowers o comunque codice non inerente il plugin stesso
+\end{itemize}
+
+Versioni di Eclipse utilizzate:
+\begin{itemize}
+ \item inizio del lavoro su Eclipse Europa
+ \item passaggio in corso d'opera ad Eclipse Ganymede
+ \item la versione più recente, Galileo, non è stata utilizzata nello sviluppo
+ \item update costanti e tuning del file di configurazione (altrimenti frequenti crash di Eclipse)
+\end{itemize}
+
+Tool di supporto usati:
+\begin{itemize}
+ \item Plugin di Eclipse per:
+\begin{itemize}
+ \item modelli uml (Omondo -> eUml2 -> Umlet)
+ \item latex (Texlipse)
+ \item svn (Subversive)
+\end{itemize}
+
+\end{itemize}
+
+\section{Sviluppo del progetto}
+
+Fonti di informazioni maggiormente utilizzate:
+\begin{itemize}
+ \item documentazione ufficiale di Eclipse
+ \item paper, tutorial, documenti presenti nel sito ufficiale di Eclipse
+ \item mailing list specifiche per lo sviluppo di plugin Eclipse
+ \item Google code (code.google.com)
+ \item vari siti internet che trattano lo sviluppo di plugin Eclipse.
+\end{itemize}
+
+Lunga fase di studio di Eclipse, sia iniziale, sia durante lo sviluppo. Da utente:
+\begin{itemize}
+ \item comprensione della terminologia (es. prospettiva, vista, workspace, workbench...)
+ \item logiche di funzionamento del programma
+ \item padronanza della gestione del tool
+\end{itemize}
+Da sviluppatore:
+\begin{itemize}
+ \item studio dell'architettura generale
+ \item comprensione della logica dei plugin
+ \item individuazione delle componenti dell'architettura su cui intervenire per raggiungere l'obiettivo
+ \item scelta (non sempre a priori) tra diverse metodologie di implementazione di funzionalità (es. menù actionSet vs command)
+ \item controllo dell'evoluzione della piattaforma Eclipse al fine di non produrre un plugin obsoleto ancor prima del rilascio (es. evitato l'utilizzo di classi/metodi o pattern deprecati)
+\end{itemize}
+
+Studio del tool TwoTowers:
+\begin{itemize}
+ \item funzionamento generale
+ \item architettura generale
+ \item logica di funzionamento del codice sorgente
+ \item individuazione dei punti di collegamento su cui agganciare il plugin
+\end{itemize}
+
+\end{document}

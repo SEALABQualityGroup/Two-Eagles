@@ -1,0 +1,22 @@
+new specificheAEmilia.And() instanceof specificheAEmilia.Espressione
+(boolean) true
+
+((specificheAEmilia.ActionInput)(new specificheAEmilia.ActionType())).getVariabiliInput()
+An exception occurred during evaluation:  java.lang.ClassCastException
+
+Cannot cast from And to Or(specificheAEmilia.Or)(new specificheAEmilia.And())
+
+null instanceof java.lang.Integer
+(boolean) false
+
+The operator + is undefined for the argument type(s) null, intnull + 3
+
+new specificheAEmilia.Somma() instanceof specificheAEmilia.Real
+(boolean) true
+
+new specificheAEmilia.Maggiore() instanceof specificheAEmilia.Boolean
+(boolean) true
+
+
+new equivalenzaComportamentale.UguaglianzaJoinConBuffer() instanceof equivalenzaComportamentale.interfaces.IEquivalenzaJoin
+(boolean) true

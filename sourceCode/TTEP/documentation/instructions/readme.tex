@@ -1,0 +1,46 @@
+%%This is a very basic article template.
+%%There is just one section and two subsections.
+\documentclass[12pt]{article}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage[italian]{babel}
+\usepackage[pointlessenum]{paralist}
+
+\title{\textbf{Istruzioni per l'installazione e la prima esecuzione dei plugin TTEP (TwoTowers Eclipse Plugin)}}
+\date{}
+\author{}
+
+\begin{document}
+
+\maketitle
+\section{Prerequisiti}
+Programmi che devono essere già installati:
+\begin{itemize}
+ \item Eclipse 3.4 o superiore (necessario);
+ \item TwoTowers (necessario per le funzionalità legate al programma stesso);
+ \item NuSMV (necessario per le funzionalità legate al programma stesso)
+ \item Seal (necessario per le funzionalità legate al programma stesso).
+\end{itemize}
+
+Non è garantito il corretto funzionamento per versioni precedenti di Eclipse.
+
+\section{Installazione}
+Copiare il contenuto della cartella 'plugins' (it.univaq.ttep\_1.0.0.jar,\\ it.univaq.ttep.help\_1.0.0.jar), nella cartella 'plugins' della propria installazione di Eclipse.
+
+\section{Primo avvio}
+\begin{itemize}
+ \item Lanciare Eclipse;
+ \item settare i path degli eseguibili dei programmi TwoTowers (TTKernel[.exe]) e Seal (XmlParser.jar) nel menù Window -> Preferences e cliccare su 'Apply';
+ \item selezionare la prospettiva TwoTowers;
+ \item aprire un file con estensione .aem, oppure uno di quelli gestiti da TwoTowers: appariranno menù e toolbar attivi dinamicamente pronti per lanciare le funzionalità associate al file aperto;
+ \item nell'help di Eclipse è presente una guida per il tool TwoTowers.
+\end{itemize}
+
+\section{Soluzione di eventuali problemi}
+Eclipse ha un file di log dove poter risalire alla causa di errori, blocchi, ecc. Il file si trova nel Workspace dove si stava lavorando al momento del problema nella cartella nascosta (quindi per vederla è necessario poter visualizzare i file nascosti) nel path '.metadata/.log'.
+
+
+
+
+\end{document}

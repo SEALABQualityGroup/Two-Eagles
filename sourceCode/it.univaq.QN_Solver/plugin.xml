@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="it.univaq.editors.PMIFEditor"
+            extensions="xml"
+            icon="icons/sample.gif"
+            id="it.univaq.editors.PMIFEditor"
+            name="PMIF Editor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editorActions">
+      <editorContribution
+            id="it.univaq.editorContribution1"
+            targetID="it.univaq.editors.PMIFEditor">
+         <action
+               class="it.univaq.editoractiondelegate.EditorActionDelegate1"
+               id="it.univaq.action1"
+               label="Queueing network solver"
+               menubarPath="it.univaq.TTEP.menu.twoTowers/it.univaq.TTEP.architecturalAssistantMenu/it.univaq.TTEP.queueingNetworkGenerator"
+               definitionId="it.univaq.TTEP.queueingNetworkSolver"
+               state="true"
+               style="push">
+         </action>
+      </editorContribution>
+      <editorContribution
+            id="it.univaq.Weasel_Client_Plug-in.editorContribution2"
+            targetID="it.univaq.PMIFGraphicalEditor">
+         <action
+               class="it.univaq.editoractiondelegate.EditorActionDelegate1"
+               id="it.univaq.Weasel_Client_Plug-in.action2"
+               label="Queueing network solver"
+               menubarPath="it.univaq.TTEP.menu.twoTowers/it.univaq.TTEP.architecturalAssistantMenu/it.univaq.TTEP.queueingNetworkGenerator"
+               definitionId="it.univaq.TTEP.queueingNetworkSolver"
+               state="true"
+               style="push">
+         </action>
+      </editorContribution>
+   </extension>
+</plugin>
