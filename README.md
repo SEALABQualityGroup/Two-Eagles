@@ -3,8 +3,8 @@
 ### Prerequisites:
 - Install a JRE, version 1.6 or newer;
 - Download the exact OS version for Eclipse at https://eclipse.org/downloads/packages/eclipse-modeling-tools/indigosr2
-- Download External plugins of TwoEagles at https://github.com/MirkoFlamminj/Two- Eagles/blob/master/ExternalPlugins.zip
-- Download TwoEagles plugins at https://github.com/MirkoFlamminj/Two- Eagles/blob/master/TwoEaglesPlugins.zip
+- Download External plugins of TwoEagles at 'ExternalPlugins'
+- Download TwoEagles plugins at 'TwoEaglesPlugins'
 
 ### Installation Guide
 1. Unpack the downloaded eclipse. You will get the directory /eclipse;
