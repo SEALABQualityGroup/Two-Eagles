@@ -1,3 +1,6 @@
+# Out-of-Date
+We are working on a new version of this tool. As soon as possible we will publish the new one here.
+
 # Two-Eagles: Installation Guide
 
 ### Prerequisites:
